@@ -2,19 +2,22 @@ import mongoose, { Schema } from "mongoose";
 
 type CategorySchemaType = {
   name: string;
+  id: any;
 };
-type DishesSchemaType = {
+export type DishesSchemaType = {
   name: string;
   ingredients: string;
   price: number;
   category: string;
   image: string;
+  categorid: string;
 };
 
 const CategorySchema = new Schema({
   name: String,
 });
 const Dishesinfo = new Schema({
+  categorid: Schema.Types.ObjectId,
   name: String,
   ingredients: String,
   price: Number,

@@ -1,22 +1,25 @@
 import { NextRequest, NextResponse } from "next/server";
 
 import { FoodType } from "../../../lib/utils/types";
-// import { uploadImageToCloudinary } from "../../../lib/utils/uploadimage";
+import { uploadImageToCloudinary } from "../../../lib/utils/uploadimage";
 import {
   CreatDishesinfo,
-  createCategory,
-  getAllCategories,
   getAllDishesinfo,
 } from "../../../lib/Services/category-service";
+import { ObjectId, Schema } from "mongoose";
 
 export async function GET() {
-  const Dishes = await getAllDishesinfo();
-  return new NextResponse(JSON.stringify({ data: Dishes }), {
+  // const Dishes = await getAllDishesinfo();
+
+  return new NextResponse(JSON.stringify({ data: [] }), {
     status: 200,
   });
 }
 
 export async function POST(request: NextRequest) {
+  type categorid = {
+    type: Schema.Types.ObjectId;
+  };
   try {
     // Parse the formData from the request
     const formData = await request.formData();
@@ -27,13 +30,13 @@ export async function POST(request: NextRequest) {
     const price = formData.get("price") as string;
     const category = formData.get("category") as string;
     const image = formData.get("image") as File;
-
+    const categorid = formData.get("categorid") as string;
     // Console log the received data
     console.log("========== Received Food Data ==========");
     console.log("Name:", name);
     console.log("ingredients:", ingredients);
     console.log("Price:", price);
-    console.log("Category:", category);
+    // console.log("Category:", category);
     console.log(
       "Image:",
       image ? `${image.name} (${image.size} bytes)` : "No image"
@@ -41,7 +44,7 @@ export async function POST(request: NextRequest) {
     console.log("=======================================");
 
     // Validate required fields
-    if (!name || !ingredients || !price || !category) {
+    if (!name || !ingredients || !price) {
       return NextResponse.json(
         { error: "Missing required fields" },
         { status: 400 }
@@ -50,12 +53,13 @@ export async function POST(request: NextRequest) {
 
     // Handle image upload if image exists
     let imageUrl = "";
-    // if (image) {
-    //   imageUrl = await uploadImageToCloudinary(image);
-    // }
+    if (image) {
+      imageUrl = await uploadImageToCloudinary(image);
+    }
 
     // Prepare the food data object
     const foodData: FoodType = {
+      categorid,
       name,
       ingredients,
       price: parseFloat(price),

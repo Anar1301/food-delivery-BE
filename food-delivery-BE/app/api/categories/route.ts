@@ -3,6 +3,7 @@ import {
   createCategory,
   getAllCategories,
 } from "../../../lib/Services/category-service";
+import { request } from "http";
 
 export async function GET() {
   const categories = await getAllCategories();
