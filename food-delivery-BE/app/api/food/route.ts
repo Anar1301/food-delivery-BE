@@ -6,12 +6,12 @@ import {
   CreatDishesinfo,
   getAllDishesinfo,
 } from "../../../lib/Services/category-service";
-import { ObjectId, Schema } from "mongoose";
+import { Schema } from "mongoose";
 
 export async function GET() {
-  // const Dishes = await getAllDishesinfo();
+  const Dishes = await getAllDishesinfo();
 
-  return new NextResponse(JSON.stringify({ data: [] }), {
+  return new NextResponse(JSON.stringify({ data: Dishes }), {
     status: 200,
   });
 }

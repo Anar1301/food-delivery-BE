@@ -19,9 +19,9 @@ export const CreatDishesinfo = async (form: DishesSchemaType) => {
   await newDishes.save();
   return newDishes;
 };
-export const getAllDishesinfo = async (id: string) => {
+export const getAllDishesinfo = async () => {
   await connectDB();
-  return await Dishes.findById(id);
+  return await Dishes.find();
 };
 export const deleteCategory = async (id: string) => {
   await connectDB();
@@ -30,4 +30,8 @@ export const deleteCategory = async (id: string) => {
 export const deletefoodinfo = async (id: string) => {
   await connectDB();
   return await Dishes.findByIdAndDelete(id);
+};
+export const getAllDishesinfobyid = async (id: string) => {
+  await connectDB();
+  return await Dishes.findById(id);
 };
