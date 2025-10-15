@@ -1,6 +1,6 @@
-import { Category, Dishes, DishesSchemaType } from "../models/Category";
+import { Category } from "../models/Category";
 import connectDB from "../mongoose";
-
+import { Dishes, DishesSchemaType } from "../models/Food";
 export const createCategory = async (name: string) => {
   await connectDB();
   const newCategory = new Category({ name });
