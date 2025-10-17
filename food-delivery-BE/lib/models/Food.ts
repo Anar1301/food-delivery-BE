@@ -1,22 +1,13 @@
 import mongoose, { Schema } from "mongoose";
-export type DishesSchemaType = {
-  name: string;
-  ingredients: string;
-  price: number;
-  category: string;
-  image: string;
-  categorid: string;
-};
+import { FoodType } from "../utils/types";
 
-const Dishesinfo = new Schema({
-  categorid: Schema.Types.ObjectId,
+const FoodSchema = new Schema({
   name: String,
+  price: { type: Number, required: true },
+  categoryId: { type: Schema.Types.ObjectId, ref: "Category", required: true },
   ingredients: String,
-  price: Number,
-  category: String,
-  image: String,
+  imageUrl: String,
 });
 
-export const Dishes =
-  mongoose.models.Dishes ||
-  mongoose.model<DishesSchemaType>("Dishes", Dishesinfo);
+export const Food =
+  mongoose.models.Food || mongoose.model<FoodType>("Food", FoodSchema);

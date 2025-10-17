@@ -1,6 +1,6 @@
-import { Category } from "../models/Category";
+import { Category, FoodsSchemaType } from "../models/Category";
 import connectDB from "../mongoose";
-import { Dishes, DishesSchemaType } from "../models/Food";
+import { Food } from "../models/Food";
 export const createCategory = async (name: string) => {
   await connectDB();
   const newCategory = new Category({ name });
@@ -13,15 +13,15 @@ export const getAllCategories = async () => {
   return await Category.find();
 };
 
-export const CreatDishesinfo = async (form: DishesSchemaType) => {
+export const CreatFoodsinfo = async (form: FoodsSchemaType) => {
   await connectDB();
-  const newDishes = new Dishes(form);
-  await newDishes.save();
-  return newDishes;
+  const newFoods = new Food(form);
+  await newFoods.save();
+  return newFoods;
 };
-export const getAllDishesinfo = async () => {
+export const getAllFoodsinfo = async () => {
   await connectDB();
-  return await Dishes.find();
+  return await Food.find().populate("categoryId");
 };
 export const deleteCategory = async (id: string) => {
   await connectDB();
@@ -29,9 +29,9 @@ export const deleteCategory = async (id: string) => {
 };
 export const deletefoodinfo = async (id: string) => {
   await connectDB();
-  return await Dishes.findByIdAndDelete(id);
+  return await Food.findByIdAndDelete(id);
 };
-export const getAllDishesinfobyid = async (id: string) => {
+export const getAllFoodsinfobyid = async (id: string) => {
   await connectDB();
-  return await Dishes.findById(id);
+  return await Food.findById(id);
 };
